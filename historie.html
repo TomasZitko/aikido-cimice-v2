@@ -123,9 +123,11 @@
         .nav-link:hover { opacity: 0.7; }
         .nav-link.active { border-bottom: 2px solid var(--text-primary); }
         .navbar.scrolled .nav-link.active { border-bottom-color: var(--text-on-dark); }
+        
+        /* Nav Toggle (Hamburger) - Hidden on Desktop */
         .nav-toggle { display: none; }
         
-        /* Dropdown Menu */
+        /* Dropdown Menu - Desktop */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -163,11 +165,8 @@
         
         .nav-link.dropdown-toggle,
         .nav-link.dropdown-toggle:hover,
-        .nav-link.dropdown-toggle.active,
-        .navbar.scrolled .nav-link.dropdown-toggle,
-        .navbar.scrolled .nav-link.dropdown-toggle.active {
+        .nav-link.dropdown-toggle.active {
             border-bottom: none !important;
-            text-decoration: none !important;
         }
 
         /* --- Timeline Section --- */
@@ -181,14 +180,15 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-
+        
         .timeline-item {
-            padding: 20px 40px;
+            padding: 40px; /* Added more vertical padding */
             position: relative;
             background-color: inherit;
             width: 50%;
         }
-
+        
+        /* The line segments for each item */
         .timeline-item::before, .timeline-item::after {
             content: '';
             position: absolute;
@@ -196,11 +196,23 @@
             background-color: var(--timeline-line-color);
             z-index: 1;
         }
-        
         .timeline-item::before { height: 50%; top: 0; }
-        .timeline-item::after { height: 50%; top: 50%; }
+        .timeline-item::after { height: 50%; bottom: 0; }
+        
+        /* Remove top line for first item and bottom line for last item */
         .timeline > .timeline-item:first-child::before { display: none; }
         .timeline > .timeline-item:last-child::after { display: none; }
+        
+        .timeline-item.left {
+            left: 0;
+        }
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        /* Position the line segments on the edge */
+        .timeline-item.left::before, .timeline-item.left::after { right: -1.5px; }
+        .timeline-item.right::before, .timeline-item.right::after { left: -1.5px; }
 
         .timeline-logo {
             position: absolute;
@@ -215,19 +227,14 @@
             overflow: hidden;
             background-color: #fff;
         }
+        .timeline-item.left .timeline-logo { right: -50px; }
+        .timeline-item.right .timeline-logo { left: -50px; }
         
         .timeline-logo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
-        .timeline-item.left { left: 0; padding-right: 70px; }
-        .timeline-item.right { left: 50%; padding-left: 70px; }
-        .timeline-item.left::before, .timeline-item.left::after { right: -1.5px; }
-        .timeline-item.right::before, .timeline-item.right::after { left: -1.5px; }
-        .timeline-item.left .timeline-logo { right: -50px; }
-        .timeline-item.right .timeline-logo { left: -50px; }
 
         .timeline-content {
             padding: 25px 30px;
@@ -260,7 +267,7 @@
         /* --- Standalone Footer --- */
         #standalone-footer-root .site-footer {
             background-color: #000000;
-            color: #FFFFFF; /* MODIFIED: Text color changed to white */
+            color: #FFFFFF;
             padding: 60px 20px;
             font-size: 0.95rem;
             line-height: 1.8;
@@ -292,7 +299,7 @@
         }
         #standalone-footer-root .footer-column .motto {
             margin-bottom: 20px;
-            color: #e0e0e0; /* MODIFIED: Lighter text color */
+            color: #e0e0e0;
         }
         #standalone-footer-root .social-icons a {
             color: #FFFFFF;
@@ -309,7 +316,7 @@
         #standalone-footer-root .footer-nav { list-style: none; padding: 0; margin: 0; }
         #standalone-footer-root .footer-nav li { margin-bottom: 8px; }
         #standalone-footer-root .footer-nav a {
-            color: #a0a0a0; /* KEPT AS IS: Per request to keep nav links grey */
+            color: #a0a0a0;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -323,7 +330,7 @@
             margin-bottom: 5px;
         }
         #standalone-footer-root .location-block p {
-            margin: 0; padding: 0; color: #e0e0e0; /* MODIFIED: Lighter text color */
+            margin: 0; padding: 0; color: #e0e0e0;
         }
         #standalone-footer-root .footer-bottom {
             max-width: 1200px;
@@ -335,47 +342,128 @@
         }
 
 
-        /* --- Responsive adjustments --- */
+        /* --- ================================= --- */
+        /* ---   MOBILE RESPONSIVE ADJUSTMENTS   --- */
+        /* --- ================================= --- */
         
         @media screen and (max-width: 992px) {
-            /* Navbar responsive */
-            .navbar { background: rgba(0,0,0,0.8); border-bottom: none; }
-            .navbar.scrolled { background: rgba(0,0,0,0.9); }
-            .nav-logo, .nav-link, .navbar.scrolled .nav-logo, .navbar.scrolled .nav-link {
-                color: var(--text-on-dark);
-            }
-            .nav-toggle {
-                display: block; background: none; border: none;
-                color: var(--text-on-dark);
-                font-size: 2.5rem; cursor: pointer; z-index: 1001;
-            }
-            .nav-menu {
-                display: none; position: fixed; top: 0; left: 0;
-                width: 100%; height: 100vh; background-color: var(--secondary-bg);
-                flex-direction: column; justify-content: center; align-items: center;
-            }
-            .nav-menu.active { display: flex; }
-            .nav-item { margin: 20px 0; width: 100%; text-align: center; }
-            .nav-item:hover .dropdown-menu { display: none; }
-            .dropdown-menu {
-                position: static; transform: none; width: 100%;
-                background: transparent; box-shadow: none !important;
-                border: none;
-                margin-top: 15px; padding: 0; display: none;
-            }
-            .dropdown-menu.open { display: block; }
-            .dropdown-menu a { color: #ccc; font-size: 1rem; padding: 8px 0; }
-            .dropdown-menu a:hover { background: transparent; color: #fff;}
+            /* --- Responsive Navbar --- */
+            .navbar { background: rgba(0,0,0,0.9); border-bottom: none; }
+            .nav-logo, .navbar.scrolled .nav-logo { color: var(--text-on-dark); }
 
-            /* Timeline responsive */
-            .timeline-item::before, .timeline-item::after { left: 40px; }
-            .timeline-item { width: 100%; padding-left: 100px; padding-right: 15px; }
-            .timeline-item.left, .timeline-item.right { left: 0%; }
-            .timeline-item.right .timeline-logo, .timeline-item.left .timeline-logo { left: -10px; }
-            .left .timeline-content, .right .timeline-content { text-align: left; }
+            .nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text-on-dark);
+                font-size: 2.5rem;
+                cursor: pointer;
+                z-index: 1001;
+                position: relative; /* Ensure it's clickable */
+            }
+            
+            .nav-menu {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: -100%; /* Start off-screen */
+                width: 100%;
+                height: 100vh;
+                background-color: var(--secondary-bg);
+                transition: left 0.3s ease-in-out;
+            }
+
+            .nav-menu.active {
+                left: 0; /* Slide in */
+            }
+            
+            .nav-item {
+                margin: 20px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-link, .navbar.scrolled .nav-link {
+                color: var(--text-on-dark);
+                font-size: 1.5rem;
+            }
+            .nav-link.active, .navbar.scrolled .nav-link.active {
+                border-bottom: none;
+            }
+            
+            /* Hide desktop dropdown on hover */
+            .nav-item:hover .dropdown-menu { display: none; }
+            
+            /* Style mobile dropdown */
+            .dropdown-menu {
+                display: none; /* Hidden by default */
+                position: static;
+                transform: none;
+                width: 100%;
+                background: transparent;
+                box-shadow: none !important;
+                border: none;
+                margin-top: 15px;
+                padding: 0;
+            }
+            .dropdown-menu.open {
+                display: block; /* Show when toggled by JS */
+            }
+            .dropdown-menu a {
+                color: #ccc;
+                font-size: 1rem;
+                padding: 10px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+             .dropdown-menu a:hover {
+                background: transparent;
+                color: #fff;
+            }
+
+            /* --- Responsive Timeline --- */
+            .timeline-item {
+                width: 100%;
+                padding-left: 90px;
+                padding-right: 15px;
+                padding-top: 50px; /* Give space for logo */
+                padding-bottom: 50px;
+            }
+            
+            .timeline-item.left, .timeline-item.right {
+                left: 0;
+            }
+            
+            /* Position the line segments to the left for mobile */
+            .timeline-item.left::before, .timeline-item.left::after,
+            .timeline-item.right::before, .timeline-item.right::after {
+                left: 31.5px; /* (Logo width / 2) + (line width / 2) */
+                right: auto; /* override desktop style */
+            }
+
+            .timeline-logo {
+                width: 60px;
+                height: 60px;
+                left: 3px; /* Keep it aligned with line */
+                top: 50%;
+                transform: translateY(-50%); /* Re-center vertically */
+            }
+            .timeline-item.left .timeline-logo,
+            .timeline-item.right .timeline-logo {
+                left: 3px;
+            }
+            
+            .left .timeline-content, .right .timeline-content {
+                text-align: left;
+            }
         }
         
         @media screen and (max-width: 768px) {
+            h2.section-title { font-size: 2.2rem; }
+
             /* Footer responsive */
             #standalone-footer-root .footer-container {
                 grid-template-columns: 1fr;
@@ -386,48 +474,49 @@
                 padding-bottom: 0;
             }
             #standalone-footer-root .footer-column .footer-title::after {
-                content: ''; display: block; width: 50px;
-                height: 1px; background: #444; margin: 10px auto 0 auto;
+                content: '';
+                display: block;
+                width: 50px;
+                height: 1px;
+                background: #444;
+                margin: 10px auto 0 auto;
             }
-            #standalone-footer-root .social-icons { margin-bottom: 20px; }
+            #standalone-footer-root .social-icons {
+                margin-bottom: 20px;
+                justify-content: center;
+                display: flex;
+            }
         }
 
         @media screen and (max-width: 600px) {
-            /* General responsive */
-            h2.section-title { font-size: 2.2rem; }
-            
+            .container {
+                padding: 60px 15px;
+            }
             /* Timeline responsive */
-            .timeline-item::before, .timeline-item::after { left: 30px; }
-            .timeline-item { padding-left: 85px; }
-            .timeline-logo { width: 80px; height: 80px; }
-            .timeline-item.right .timeline-logo, .timeline-item.left .timeline-logo { left: -10px; }
-            
             .timeline-content h3 { font-size: 1.6rem; }
             .timeline-content p, .timeline-content { font-size: 0.95rem; }
         }
-
     </style>
 </head>
 <body>
-
-    <header>
+    <header id="navbar-root">
         <nav class="navbar" id="navbar">
             <div class="navbar-container">
-                <a href="#" class="nav-logo">Ronin Dojo</a>
+                <a href="Home.html" class="nav-logo">Ronin Dojo</a>
                 <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
                 <ul class="nav-menu" id="nav-menu">
-                    <li class="nav-item"><a href="#home" class="nav-link">Homepage</a></li>
-                    <li class="nav-item"><a href="#study" class="nav-link">Studovna</a></li>
-                    <li class="nav-item"><a href="#history" class="nav-link active">Historie</a></li>
+                    <li class="nav-item"><a href="Home.html" class="nav-link">Homepage</a></li>
+                    <li class="nav-item"><a href="Studovna.html" class="nav-link">Studovna</a></li>
+                    <li class="nav-item"><a href="historie.html" class="nav-link active">Historie</a></li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="dropdown-toggle">Více</a>
                         <ul class="dropdown-menu" id="dropdown-menu">
-                            <li><a href="#team">Tým</a></li>
-                            <li><a href="#pricing">Ceník</a></li>
-                            <li><a href="#gallery">Galerie</a></li>
-                            <li><a href="#downloads">Ke stažení</a></li>
-                            <li><a href="#faq">FAQ</a></li>
-                            <li><a href="#contact">Kontakt</a></li>
+                            <li><a href="Home.html#team">Tým</a></li>
+                            <li><a href="Home.html#pricing">Ceník</a></li>
+                            <li><a href="Home.html#gallery">Galerie</a></li>
+                            <li><a href="Home.html#downloads">Ke stažení</a></li>
+                            <li><a href="Home.html#faq">FAQ</a></li>
+                            <li><a href="Home.html#contact">Kontakt</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -563,52 +652,54 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
-        // --- AOS Initialization ---
-        AOS.init({
-            once: true,
-            duration: 800,
-            easing: 'ease-out-cubic',
-        });
-
-        // --- Combined Scripts on DOMContentLoaded ---
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Navbar Scroll Effect ---
+            // --- AOS Initialization ---
+            AOS.init({
+                once: true,
+                duration: 800,
+                easing: 'ease-out-cubic',
+            });
+
             const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if(navbar) {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const dropdownToggle = document.getElementById('dropdown-toggle');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+
+            // --- Navbar Scroll Effect ---
+            if (navbar) {
+                window.addEventListener('scroll', () => {
                     if (window.scrollY > 50) {
                         navbar.classList.add('scrolled');
                     } else {
                         navbar.classList.remove('scrolled');
                     }
-                }
-            });
+                });
+            }
             
             // --- Mobile Menu Toggle ---
-            const navToggle = document.getElementById('nav-toggle');
-            const navMenu = document.getElementById('nav-menu');
-            if(navToggle && navMenu) {
+            if (navToggle && navMenu) {
                 navToggle.addEventListener('click', () => {
                     navMenu.classList.toggle('active');
                     navToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                    // Prevent body scrolling when the menu is open
                     document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
                 });
             }
             
-            // --- Dropdown for Mobile ---
-            const dropdownToggle = document.getElementById('dropdown-toggle');
-            const dropdownMenu = document.getElementById('dropdown-menu');
+            // --- Dropdown Toggle for Mobile ---
             if (dropdownToggle && dropdownMenu) {
-                dropdownToggle.addEventListener('click', function(e) {
+                dropdownToggle.addEventListener('click', function(event) {
+                    // Only run this logic on mobile screens
                     if (window.innerWidth <= 992) {
-                        e.preventDefault();
+                        event.preventDefault(); // Prevent link from navigating
                         dropdownMenu.classList.toggle('open');
                     }
                 });
             }
 
             // --- Footer Copyright Year ---
-            var currentYearEl = document.getElementById('currentYear');
+            const currentYearEl = document.getElementById('currentYear');
             if (currentYearEl) {
                 currentYearEl.textContent = new Date().getFullYear();
             }
